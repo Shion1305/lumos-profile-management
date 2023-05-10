@@ -60,12 +60,12 @@ async function createUser(tokenResp: DiscordAccessTokenResponse, userResp: Disco
     newUser.discord_refresh_token = tokenResp.refresh_token;
     newUser.discord_expires_at = (Date.now() / 1000 + tokenResp.expires_in);
     newUser.discord_picture_url = userResp.avatar;
-    await db.collection('users').add(newUser)
+    return await db.collection('users').add(newUser)
         .then((docRef) => {
             console.log('Document written with ID: ', docRef.id);
             return docRef.id;
         }).catch((error) => {
             console.error('Error adding document: ', error);
+            return "";
         })
-    return "";
 }
