@@ -1,11 +1,8 @@
 import { verifyToken } from '~/server/jwt'
 
 export default defineEventHandler((event) => {
-    const authHeader = event.req.headers.authorization
-
-    if (authHeader) {
-        const token = authHeader.split(' ')[1]
-
+    const token = getCookie(event, 'authToken')
+    if (token) {
         if (token) {
             const auth = verifyToken(token)
             if (auth) {
