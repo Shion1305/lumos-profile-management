@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    modules: ["@nuxtjs/google-fonts"],
     ssr: false,
     runtimeConfig: {
         line: {
@@ -17,6 +18,13 @@ export default defineNuxtConfig({
             clientID: process.env.DISCORD_CLIENT_ID,
             callbackURI: process.env.DISCORD_CALLBACK_URI,
             clientSecret: process.env.DISCORD_CLIENT_SECRET
+        }
+    },
+    googleFonts: {
+        families: {
+            "Zen Kaku Gothic New": {
+                wght: [400, 500, 600, 700],
+            }
         }
     }
 })
