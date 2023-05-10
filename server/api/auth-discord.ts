@@ -23,7 +23,13 @@ export default defineEventHandler(async (event) => {
         await updateUser(userID, discordTokenResp, discordUser);
     }
     const token: string = generateToken(userID);
-    const serializedCookie = cookie.serialize('token', token, {})
+    const serializedCookie = cookie.serialize('authToken', token, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24,
+        path: '/'
+    })
     event.res.setHeader('set-cookie', serializedCookie)
     return sendRedirect(event, '/profile', 302)
 });
