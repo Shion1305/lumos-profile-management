@@ -15,7 +15,6 @@ const generateToken = (id: string) => {
 const verifyToken = (token: string): JWTPayload | null => {
   try {
     const id = jwt.verify(token, SECRET_KEY, { algorithms: ['HS256'] })
-    console.log('decoded id: ', id)
     if (id) {
       return id as JWTPayload
     }

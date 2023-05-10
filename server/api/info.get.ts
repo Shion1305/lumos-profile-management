@@ -5,10 +5,12 @@ import {UserProfile} from "~/server/types/user_profile";
 const db = admin.firestore()
 
 export default defineEventHandler(async (event) => {
-    if (!event.context.userID) {
+    const userID = event.context.userID
+    if (!userID || userID === "") {
+        console.log("user not found", userID)
         return sendError(event, new Error("invalid token"))
     }
-    const snapshot = await db.collection("users").doc(event.context.userID).get()
+    const snapshot = await db.collection("users").doc(userID).get()
     if (!snapshot.exists) {
         return sendError(event, new Error("user not found"))
     }
