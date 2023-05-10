@@ -1,4 +1,4 @@
-import admin from "firebase-admin";
+import admin from "~/server/firebase-admin";
 import {User} from "~/server/types/user";
 import {getAccessToken, getDiscordUserInfo} from "~/server/discord-auth";
 import {DiscordUserResponse} from "~/server/types/api/discord-api/discord-user";
