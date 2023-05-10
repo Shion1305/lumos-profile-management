@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     const discordUser: DiscordUserResponse = await getDiscordUserInfo(discordTokenResp.access_token);
 
     const qResult = await db.collection('users')
-        .where('discord_id', '==', discordUser.id).get()
+        .where('discord_service_id', '==', discordUser.id).get()
     var userID: string;
     if (qResult.empty || qResult.size == 0) {
         userID = await createUser(discordTokenResp, discordUser);
