@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
 async function updateUser(userID: string, tokenResp: DiscordAccessTokenResponse, userResp: DiscordUserResponse): Promise<void> {
     await db.collection('users').doc(userID)
         .update({
-            discord_username: userResp.username,
+            discord_username: userResp.username + " #" + userResp.discriminator,
             discord_service_id: userResp.id,
             discord_access_token: tokenResp.access_token,
             discord_refresh_token: tokenResp.refresh_token,
@@ -54,7 +54,7 @@ async function updateUser(userID: string, tokenResp: DiscordAccessTokenResponse,
 
 async function createUser(tokenResp: DiscordAccessTokenResponse, userResp: DiscordUserResponse): Promise<string> {
     const newUser: User = {} as User
-    newUser.discord_username = userResp.username;
+    newUser.discord_username = userResp.username + " #" + userResp.discriminator;
     newUser.discord_service_id = userResp.id;
     newUser.discord_access_token = tokenResp.access_token;
     newUser.discord_refresh_token = tokenResp.refresh_token;
