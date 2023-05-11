@@ -28,6 +28,18 @@ export default defineNuxtConfig({
             clientSecret: process.env.DISCORD_CLIENT_SECRET
         }
     },
+    // configure meta
+    app: {
+        head: {
+            title: "Lumos メンバー管理ページ",
+            meta: [
+                {name: "viewport", content: "width=device-width, initial-scale=1"},
+                {charset: "utf-8"},
+                {property: "og:type", content: "website"},
+                {property: "og:site_name", content: "Lumos メンバー管理ページ"},
+            ]
+        }
+    },
     googleFonts: {
         families: {
             "Zen Kaku Gothic New": {
