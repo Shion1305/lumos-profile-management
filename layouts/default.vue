@@ -18,9 +18,10 @@
   width: 100lvw;
   height: 100lvh;
   display: flex;
-  overflow: hidden;
 
   > div {
+    overflow: hidden;
+    overflow-y: auto;
     padding: 30px;
     box-sizing: border-box;
     max-width: 100%;
