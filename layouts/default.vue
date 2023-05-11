@@ -5,8 +5,6 @@
         <div>
             <header>
                 <img src="@/assets/imgs/lumos_logo.png" id="logo"/>
-                <div id="header-title">Lumos メンバー管理</div>
-                <hr>
             </header>
             <slot/>
         </div>
@@ -20,7 +18,7 @@
   display: flex;
 
   > div {
-      padding: 50px;
+    padding: 50px;
     max-width: 100%;
     margin: auto;
     display: flex;
@@ -35,8 +33,6 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
-  font-size: min(7vw, 30px);
 
   #logo {
     margin: auto;
@@ -46,13 +42,6 @@ header {
     box-sizing: border-box;
     padding: 10%;
   }
-
-  hr {
-    width: 100%;
-    border: 2px solid #fff3db;
-    border-radius: 2px;
-  }
-
 }
 </style>
 <style>
