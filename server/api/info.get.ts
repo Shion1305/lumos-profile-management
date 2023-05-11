@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
         discord_picture_url: userData.discord_picture_url,
         line_username: userData.line_username,
         line_picture_url: userData.line_picture_url,
-        entry_year: userData.entry_year,
+        student_id: userData.student_id,
         first_name: userData.first_name,
         last_name: userData.last_name,
     } as UserProfile

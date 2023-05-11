@@ -1,6 +1,6 @@
 export interface User {
     user_id: number
-    entry_year: number
+    student_id: number
     first_name: string
     last_name: string
     line_username: string
