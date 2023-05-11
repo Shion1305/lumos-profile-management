@@ -19,7 +19,6 @@ async function getAccessToken(
     })
     // const response = await
     return axios.post(url, body, {headers: headers}).then((response) => {
-        console.log(response.data)
         return response.data as LineTokenResponse
     })
 }
