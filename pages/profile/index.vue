@@ -89,8 +89,8 @@ const enterEditMode = () => {
         </table>
         <button id="edit-button" @click="enterEditMode">編集する</button>
         <div id="integrations">
-            <LineWidget/>
-            <DiscordWidget/>
+            <LineWidget :iconURL="user.line_picture_url!!" :username="user.line_username!!"/>
+            <DiscordWidget :iconURL="user.discord_picture_url!!" :username="user.discord_username!!"/>
         </div>
         <NuxtLink v-if="user.has_access===true" to="/admin">管理者ページへ</NuxtLink>
     </div>
