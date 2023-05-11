@@ -92,7 +92,7 @@ const enterEditMode = () => {
             <LineWidget :iconURL="user.line_picture_url!!" :username="user.line_username!!"/>
             <DiscordWidget :iconURL="user.discord_picture_url!!" :username="user.discord_username!!"/>
         </div>
-        <NuxtLink v-if="user.has_access===true" to="/admin">管理者ページへ</NuxtLink>
+        <NuxtLink v-if="user.has_access===true" to="/admin" id="admin-link">管理者ページへ</NuxtLink>
     </div>
 </template>
 
@@ -172,5 +172,17 @@ hr {
   flex-direction: column;
   align-items: center;
   width: fit-content;
+}
+
+#admin-link{
+  margin: 0 auto;
+  display: block;
+  background: #fff3db;
+  font-size: 1.2em;
+  color: #2e2f3f;
+  padding: .5em 1em;
+  border-radius: .5em;
+  font-weight: bold;
+  text-decoration: none;
 }
 </style>
