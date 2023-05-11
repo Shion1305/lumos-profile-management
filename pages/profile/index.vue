@@ -92,6 +92,7 @@ const enterEditMode = () => {
             <LineWidget/>
             <DiscordWidget/>
         </div>
+        <NuxtLink v-if="user.has_access===true" to="/admin">管理者ページへ</NuxtLink>
     </div>
 </template>
 
@@ -166,7 +167,7 @@ hr {
 }
 
 #integrations {
-    margin: 0 auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
