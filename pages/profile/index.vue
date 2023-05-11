@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import {fulfillsRequirements, UserProfile} from "~/types/user_profile";
 import axios from "axios";
+import LineWidget from "~/components/LineWidget.vue";
+import DiscordWidget from "~/components/DiscordWidget.vue";
 
 const authorization = useCookie('authToken')
 if (!authorization.value) {
@@ -86,6 +88,10 @@ const enterEditMode = () => {
             </tr>
         </table>
         <button id="edit-button" @click="enterEditMode">編集する</button>
+        <div id="integrations">
+            <LineWidget/>
+            <DiscordWidget/>
+        </div>
     </div>
 </template>
 
@@ -157,5 +163,13 @@ hr {
     font-weight: bold;
     margin: 0 auto;
   }
+}
+
+#integrations {
+    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
 }
 </style>

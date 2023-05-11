@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .base {
     overflow: hidden;
     width: min(80vw, 350px, 100%);
