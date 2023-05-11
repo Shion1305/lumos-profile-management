@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const authURL = useRuntimeConfig().discord.authUrl
+const authURL = useRuntimeConfig().public.discord.authUrl
 </script>
 
 <template>
