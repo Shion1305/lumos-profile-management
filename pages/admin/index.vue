@@ -12,7 +12,7 @@ console.log(members)
 </script>
 
 <template>
-    <h2>ユーザー一覧</h2>
+    <h2>Members List</h2>
     <table id="data-table">
         <tr>
             <th>名前</th>
@@ -35,17 +35,18 @@ console.log(members)
 </template>
 
 <style scoped lang="scss">
+h2 {
+  text-align: center;
+}
+
 #data-table {
   border: 1px solid #e2e2e2;
   border-collapse: collapse;
 
-  tr {
-    height: 4em;
-  }
-
   th, td {
     font-size: 1.2em;
     border: 1px solid #e2e2e2;
+    padding: .7em;
 
     > * {
       vertical-align: middle;
