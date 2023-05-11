@@ -42,7 +42,7 @@ async function updateUser(userID: string, tokenResp: DiscordAccessTokenResponse,
             discord_access_token: tokenResp.access_token,
             discord_refresh_token: tokenResp.refresh_token,
             discord_expires_at: (Date.now() / 1000 + tokenResp.expires_in),
-            discord_picture_url: userResp.avatar
+            discord_picture_url: "https://cdn.discordapp.com/avatars/" + userResp.id + "/" + userResp.avatar + ".png"
         })
         .then((docRef) => {
             console.log('Document written with ID: ', userID);
@@ -59,7 +59,7 @@ async function createUser(tokenResp: DiscordAccessTokenResponse, userResp: Disco
     newUser.discord_access_token = tokenResp.access_token;
     newUser.discord_refresh_token = tokenResp.refresh_token;
     newUser.discord_expires_at = (Date.now() / 1000 + tokenResp.expires_in);
-    newUser.discord_picture_url = userResp.avatar;
+    newUser.discord_picture_url = "https://cdn.discordapp.com/avatars/" + userResp.id + "/" + userResp.avatar + ".png"
     return await db.collection('users').add(newUser)
         .then((docRef) => {
             console.log('Document written with ID: ', docRef.id);
