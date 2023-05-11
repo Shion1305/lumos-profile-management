@@ -3,8 +3,15 @@ export default defineNuxtConfig({
     modules: ["@nuxtjs/google-fonts"],
     ssr: false,
     runtimeConfig: {
+        public: {
+            line: {
+                authUrl: process.env.LINE_AUTH_URL,
+            },
+            discord: {
+                authUrl: process.env.DISCORD_AUTH_URL,
+            }
+        },
         line: {
-            authUrl: process.env.LINE_AUTH_URL,
             clientID: process.env.LINE_CLIENT_ID,
             callbackURI: process.env.LINE_CALLBACK_URI,
             clientSecret: process.env.LINE_CLIENT_SECRET
@@ -16,7 +23,6 @@ export default defineNuxtConfig({
             secret: process.env.JWT_SECRET
         },
         discord: {
-            authUrl: process.env.DISCORD_AUTH_URL,
             clientID: process.env.DISCORD_CLIENT_ID,
             callbackURI: process.env.DISCORD_CALLBACK_URI,
             clientSecret: process.env.DISCORD_CLIENT_SECRET
