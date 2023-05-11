@@ -15,4 +15,5 @@ export interface User {
     discord_refresh_token: string
     discord_expires_at: number
     discord_picture_url: string
+    has_access: boolean
 }
