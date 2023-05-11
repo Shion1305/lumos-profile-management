@@ -23,5 +23,6 @@ export default defineEventHandler(async (event) => {
         student_id: userData.student_id,
         first_name: userData.first_name,
         last_name: userData.last_name,
+        has_access: userData.has_access,
     } as UserProfile
 })

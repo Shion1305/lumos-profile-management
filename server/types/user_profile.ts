@@ -6,4 +6,5 @@ export interface UserProfile {
     discord_picture_url: string
     line_username: string
     line_picture_url: string
+    has_access: boolean
 }
