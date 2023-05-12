@@ -2,11 +2,11 @@
 import axios from "axios";
 import {UserProfile} from "~/types/user_profile";
 
-const {data: membersData, status} = await axios.get("/api/admin/members")
-if (status !== 200) {
-    console.log("error in getting members", status)
-    useRouter().push('/profile')
-}
+const {data: membersData, error} = await axios.get("/api/admin/members")
+    .catch((error) => {
+        console.log("error in getting members", error)
+        useRouter().push('/profile')
+    })
 const members = membersData as UserProfile[]
 console.log(members)
 </script>
