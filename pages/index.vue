@@ -8,13 +8,13 @@ const authURL = useRuntimeConfig().public.discord.authUrl
         <hr>
         <a id="discord-auth"
            :href="authURL">
-            <img src="@/assets/imgs/discord_logo.svg" alt="Discord">
+            <img src="@/assets/imgs/discord_logo.png" alt="Discord"/>
             でログイン
         </a>
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 #base-frame {
     width: 100%;
     display: flex;
@@ -44,14 +44,12 @@ hr {
     text-decoration: none;
     flex-direction: column;
     border-radius: 15px;
-
-    > img {
-        width: fit-content;
-        height: 40px;
-    }
-
     font-size: 1.2em;
     font-weight: bold;
 
+    > img {
+        max-width: fit-content;
+        height: 40px;
+    }
 }
 </style>
