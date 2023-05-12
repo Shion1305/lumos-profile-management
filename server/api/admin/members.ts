@@ -22,7 +22,9 @@ export default defineEventHandler(async (event) => {
     if (!userData.has_access) {
         return sendError(event, new Error("user has no access"))
     }
-    const usersSnapshot = await db.collection('users').get()
+    const usersSnapshot =
+        await db.collection('users')
+            .orderBy("student_id").get()
     const users: UserProfile[] = []
     await usersSnapshot.forEach((doc) => {
         const exportData = {} as UserProfile
