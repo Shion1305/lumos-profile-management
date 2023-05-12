@@ -1,0 +1,21 @@
+# .gcloudignore
+# Ignore everything
+*
+
+# Allow specific files and directories
+!/app.yaml
+!/package.json
+!/package-lock.json
+!/yarn.lock
+!/nuxt.config.js
+!/static/
+!/assets/
+!/components/
+!/layouts/
+!/middleware/
+!/pages/
+!/plugins/
+!/store/
+!/.nuxt/
+!/.output/
+!/credentials

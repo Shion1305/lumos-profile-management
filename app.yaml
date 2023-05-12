@@ -1,0 +1,17 @@
+service: default
+runtime: nodejs18
+
+instance_class: F1
+
+automatic_scaling:
+  min_instances: 0
+
+handlers:
+  - url: /.*
+    script: auto
+    secure: always
+
+env_variables:
+  NUXT_HOST: "0.0.0.0"
+  NUXT_PORT: "8080"
+  NODE_ENV: "production"

@@ -6,6 +6,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "start": "HOST=0.0.0.0 PORT=8080 node ./.output/server/index.mjs",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
