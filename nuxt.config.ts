@@ -25,7 +25,8 @@ export default defineNuxtConfig({
         discord: {
             clientID: process.env.DISCORD_CLIENT_ID,
             callbackURI: process.env.DISCORD_CALLBACK_URI,
-            clientSecret: process.env.DISCORD_CLIENT_SECRET
+            clientSecret: process.env.DISCORD_CLIENT_SECRET,
+            guildID: process.env.DISCORD_GUILD_ID,
         }
     },
     // configure meta
