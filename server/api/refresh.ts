@@ -10,7 +10,15 @@ export default defineEventHandler(async (event) => {
     for (const user of users.docs) {
         const userData = user.data() as User
         const newToken = await refreshDiscordToken(userData.discord_refresh_token)
+        if (!newToken) {
+            errors.push(user.id)
+            continue
+        }
         const discordProfile = await getDiscordUserInfo(newToken.access_token)
+        if (!discordProfile) {
+            errors.push(user.id)
+            continue
+        }
         const refreshReq = await db.collection("users").doc(user.id).update({
             discord_username: discordProfile.username + " #" + discordProfile.discriminator,
             discord_service_id: discordProfile.id,

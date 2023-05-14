@@ -10,9 +10,14 @@ const db = admin.firestore();
 
 export default defineEventHandler(async (event) => {
     const code: string = getQuery(event).code as string;
-    const discordTokenResp: DiscordAccessTokenResponse = await getAccessToken(code);
-    const discordUser: DiscordUserResponse = await getDiscordUserInfo(discordTokenResp.access_token);
-
+    const discordTokenResp: DiscordAccessTokenResponse | null = await getAccessToken(code);
+    if (!discordTokenResp) {
+        return sendError(event, new Error("failed to get access token"));
+    }
+    const discordUser: DiscordUserResponse | null = await getDiscordUserInfo(discordTokenResp.access_token);
+    if (!discordUser) {
+        return sendError(event, new Error("successfully got access token but failed to get user info"));
+    }
     const qResult = await db.collection('users')
         .where('discord_service_id', '==', discordUser.id).get()
     var userID: string;

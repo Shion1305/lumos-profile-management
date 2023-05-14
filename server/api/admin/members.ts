@@ -1,10 +1,5 @@
 import admin from "~/server/pkg/firebase-admin";
 import {User} from "~/server/types/user";
-import {getAccessToken, getDiscordUserInfo} from "~/server/pkg/discord-auth";
-import {DiscordUserResponse} from "~/server/types/api/discord-api/discord-user";
-import {DiscordAccessTokenResponse} from "~/server/types/api/discord-api/discord-token";
-import {generateToken} from "~/server/pkg/jwt";
-import cookie from "cookie";
 import {UserProfile} from "~/server/types/user_profile";
 
 const db = admin.firestore();

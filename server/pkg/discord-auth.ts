@@ -5,7 +5,7 @@ import {DiscordMemberInfoResponse} from "~/server/types/api/discord-api/discord-
 
 async function getAccessToken(
     code: string
-): Promise<DiscordAccessTokenResponse | any> {
+): Promise<DiscordAccessTokenResponse | null> {
     const config = useRuntimeConfig()
     const url = 'https://discordapp.com/api/oauth2/token'
     const headers = {
@@ -20,17 +20,24 @@ async function getAccessToken(
     })
     return axios.post(url, body, {headers: headers}).then((response) => {
         return response.data as DiscordAccessTokenResponse
+    }).catch((error) => {
+        console.log("getAccessToken failed (status, error): ", error.response.status, error.response.data)
+        return null
     })
 }
 
-async function getDiscordUserInfo(token: string): Promise<DiscordUserResponse> {
+async function getDiscordUserInfo(token: string): Promise<DiscordUserResponse | null> {
     const url: string = 'https://discordapp.com/api/users/@me'
-    const response = await axios.get(url, {
+    return await axios.get(url, {
         headers: {
             Authorization: 'Bearer ' + token
         }
+    }).then((response) => {
+        return response.data as DiscordUserResponse
+    }).catch((error) => {
+        console.log("getDiscordUserInfo failed (status, error): ", error.response.status, error.response.data)
+        return null
     })
-    return response.data as DiscordUserResponse
 }
 
 async function getDiscordServerInfo(token: string): Promise<DiscordMemberInfoResponse | null> {
@@ -51,7 +58,7 @@ async function getDiscordServerInfo(token: string): Promise<DiscordMemberInfoRes
     })
 }
 
-async function refreshDiscordToken(refresh_token: string): Promise<DiscordAccessTokenResponse> {
+async function refreshDiscordToken(refresh_token: string): Promise<DiscordAccessTokenResponse | null> {
     const config = useRuntimeConfig()
     const url = 'https://discordapp.com/api/oauth2/token'
     const headers = {
@@ -65,6 +72,9 @@ async function refreshDiscordToken(refresh_token: string): Promise<DiscordAccess
     })
     return axios.post(url, body, {headers: headers}).then((response) => {
         return response.data as DiscordAccessTokenResponse
+    }).catch((error) => {
+        console.log("refreshDiscordToken failed (status, error): ", error.response.status, error.response.data)
+        return null
     })
 }
 
