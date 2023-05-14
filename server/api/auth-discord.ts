@@ -1,6 +1,6 @@
 import admin from "~/server/pkg/firebase-admin";
 import {User} from "~/server/types/user";
-import {getAccessToken, getDiscordUserInfo} from "~/server/pkg/discord-auth";
+import {getAccessToken, getDiscordServerInfo, getDiscordUserInfo} from "~/server/pkg/discord-auth";
 import {DiscordUserResponse} from "~/server/types/api/discord-api/discord-user";
 import {DiscordAccessTokenResponse} from "~/server/types/api/discord-api/discord-token";
 import {generateToken} from "~/server/pkg/jwt";
@@ -18,14 +18,19 @@ export default defineEventHandler(async (event) => {
     if (!discordUser) {
         return sendError(event, new Error("successfully got access token but failed to get user info"));
     }
+    const serverProfile = await getDiscordServerInfo(discordTokenResp.access_token);
+    if (!serverProfile) {
+        // user seems to be not in server...
+        return sendRedirect(event, '/error/not_in_server', 302)
+    }
     const qResult = await db.collection('users')
         .where('discord_service_id', '==', discordUser.id).get()
     var userID: string;
     if (qResult.empty || qResult.size == 0) {
-        userID = await createUser(discordTokenResp, discordUser);
+        userID = await createUser(discordTokenResp, discordUser, serverProfile.nick);
     } else {
         userID = qResult.docs[0].id
-        await updateUser(userID, discordTokenResp, discordUser);
+        await updateUser(userID, discordTokenResp, discordUser, serverProfile.nick);
     }
     const token: string = generateToken(userID);
     const serializedCookie = cookie.serialize('authToken', token, {
@@ -39,7 +44,7 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, '/profile', 302)
 });
 
-async function updateUser(userID: string, tokenResp: DiscordAccessTokenResponse, userResp: DiscordUserResponse): Promise<void> {
+async function updateUser(userID: string, tokenResp: DiscordAccessTokenResponse, userResp: DiscordUserResponse, nickname: string | undefined): Promise<void> {
     await db.collection('users').doc(userID)
         .update({
             discord_username: userResp.username + " #" + userResp.discriminator,
@@ -47,7 +52,8 @@ async function updateUser(userID: string, tokenResp: DiscordAccessTokenResponse,
             discord_access_token: tokenResp.access_token,
             discord_refresh_token: tokenResp.refresh_token,
             discord_expires_at: (Date.now() / 1000 + tokenResp.expires_in),
-            discord_picture_url: "https://cdn.discordapp.com/avatars/" + userResp.id + "/" + userResp.avatar + ".png"
+            discord_picture_url: "https://cdn.discordapp.com/avatars/" + userResp.id + "/" + userResp.avatar + ".png",
+            discord_nickname: nickname,
         })
         .then((docRef) => {
             console.log('Document written with ID: ', userID);
@@ -57,7 +63,7 @@ async function updateUser(userID: string, tokenResp: DiscordAccessTokenResponse,
 }
 
 
-async function createUser(tokenResp: DiscordAccessTokenResponse, userResp: DiscordUserResponse): Promise<string> {
+async function createUser(tokenResp: DiscordAccessTokenResponse, userResp: DiscordUserResponse, nickname: string | undefined): Promise<string> {
     const newUser: User = {} as User
     newUser.discord_username = userResp.username + " #" + userResp.discriminator;
     newUser.discord_service_id = userResp.id;
@@ -65,6 +71,7 @@ async function createUser(tokenResp: DiscordAccessTokenResponse, userResp: Disco
     newUser.discord_refresh_token = tokenResp.refresh_token;
     newUser.discord_expires_at = (Date.now() / 1000 + tokenResp.expires_in);
     newUser.discord_picture_url = "https://cdn.discordapp.com/avatars/" + userResp.id + "/" + userResp.avatar + ".png"
+    newUser.discord_nickname = nickname;
     newUser.has_access = false;
     return await db.collection('users').add(newUser)
         .then((docRef) => {
