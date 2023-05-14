@@ -1,6 +1,7 @@
 import {DiscordAccessTokenResponse} from "~/server/types/api/discord-api/discord-token";
 import {DiscordUserResponse} from "~/server/types/api/discord-api/discord-user";
 import axios from "axios";
+import {DiscordMemberInfoResponse} from "~/server/types/api/discord-api/discord-member-info";
 
 async function getAccessToken(
     code: string
@@ -30,6 +31,24 @@ async function getDiscordUserInfo(token: string): Promise<DiscordUserResponse> {
         }
     })
     return response.data as DiscordUserResponse
+}
+
+async function getDiscordServerInfo(token: string): Promise<DiscordMemberInfoResponse | null> {
+    const url: string = `https://discord.com/api/users/@me/guilds/${useRuntimeConfig().discord.guildID}/member`
+    return await axios.get(url, {
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    }).then((response) => {
+        if (response.status !== 200) {
+            console.log("getDiscordServerInfo failed (status, error): ", response.status, response.data)
+            return null
+        }
+        return response.data as DiscordMemberInfoResponse
+    }).catch((error) => {
+        console.log("getDiscordServerInfo failed (status, error): ", error.response.status, error.response.data)
+        return null
+    })
 }
 
 async function refreshDiscordToken(refresh_token: string): Promise<DiscordAccessTokenResponse> {
