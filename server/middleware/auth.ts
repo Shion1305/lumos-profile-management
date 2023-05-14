@@ -1,4 +1,4 @@
-import { verifyToken } from '~/server/jwt'
+import { verifyToken } from '~/server/pkg/jwt'
 
 export default defineEventHandler((event) => {
     const token = getCookie(event, 'authToken')

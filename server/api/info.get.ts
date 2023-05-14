@@ -1,4 +1,4 @@
-import admin from "~/server/firebase-admin";
+import admin from "~/server/pkg/firebase-admin";
 import {User} from "~/server/types/user";
 import {UserProfile} from "~/server/types/user_profile";
 

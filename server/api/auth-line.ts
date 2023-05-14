@@ -1,6 +1,6 @@
 import {sendError} from "h3";
-import admin from "~/server/firebase-admin";
-import {getAccessToken, getLineUserInfo} from "~/server/line-auth";
+import admin from "~/server/pkg/firebase-admin";
+import {getAccessToken, getLineUserInfo} from "~/server/pkg/line-auth";
 import {LineTokenResponse} from "~/server/types/api/line-api/line-token";
 import {LineUserProfileResponse} from "~/server/types/api/line-api/line-user";
 
