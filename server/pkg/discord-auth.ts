@@ -32,4 +32,21 @@ async function getDiscordUserInfo(token: string): Promise<DiscordUserResponse> {
     return response.data as DiscordUserResponse
 }
 
-export {getAccessToken, getDiscordUserInfo}
+async function refreshDiscordToken(refresh_token: string): Promise<DiscordAccessTokenResponse> {
+    const config = useRuntimeConfig()
+    const url = 'https://discordapp.com/api/oauth2/token'
+    const headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    const body = new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refresh_token,
+        client_id: config.discord.clientID,
+        client_secret: config.discord.clientSecret
+    })
+    return axios.post(url, body, {headers: headers}).then((response) => {
+        return response.data as DiscordAccessTokenResponse
+    })
+}
+
+export {getAccessToken, getDiscordUserInfo, refreshDiscordToken}
