@@ -78,4 +78,4 @@ async function refreshDiscordToken(refresh_token: string): Promise<DiscordAccess
     })
 }
 
-export {getAccessToken, getDiscordUserInfo, refreshDiscordToken}
+export {getAccessToken, getDiscordUserInfo, refreshDiscordToken, getDiscordServerInfo}
