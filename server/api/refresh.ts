@@ -1,6 +1,6 @@
 import admin from "~/server/pkg/firebase-admin";
 import {User} from "~/server/types/user";
-import {getDiscordUserInfo, refreshDiscordToken} from "~/server/pkg/discord-auth";
+import {getDiscordServerInfo, getDiscordUserInfo, refreshDiscordToken} from "~/server/pkg/discord-auth";
 
 const db = admin.firestore()
 
@@ -19,14 +19,22 @@ export default defineEventHandler(async (event) => {
             errors.push(user.id)
             continue
         }
-        const refreshReq = await db.collection("users").doc(user.id).update({
+        const updateData = {
             discord_username: discordProfile.username + " #" + discordProfile.discriminator,
+            discord_nickname: "",
             discord_service_id: discordProfile.id,
             discord_access_token: newToken.access_token,
             discord_refresh_token: newToken.refresh_token,
             discord_expires_at: (Math.floor(Date.now() / 1000) + newToken.expires_in),
             discord_picture_url: "https://cdn.discordapp.com/avatars/" + discordProfile.id + "/" + discordProfile.avatar + ".png"
-        })
+        }
+
+        const discordNickname = await getDiscordServerInfo(newToken.access_token)
+        if (discordNickname && discordNickname.nick) {
+            updateData.discord_nickname = discordNickname.nick
+        }
+
+        const refreshReq = await db.collection("users").doc(user.id).update(updateData)
         if (!refreshReq) {
             errors.push(user.id)
         }
