@@ -1,16 +1,16 @@
 <script lang="ts" setup></script>
 
 <template>
-    <div id="root-frame">
-        <div>
-            <header>
-                <img src="@/assets/imgs/lumos_logo.png" id="logo"/>
-            </header>
-            <div id="slot">
-                <slot/>
-            </div>
-        </div>
+  <div id="root-frame">
+    <div>
+      <header>
+        <img src="@/assets/imgs/lumos_logo.png" id="logo" />
+      </header>
+      <div id="slot">
+        <slot />
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -35,13 +35,13 @@
 // add fade in animation to logo
 #logo {
   opacity: 0;
-  animation: fadein ease-out .2s .5s forwards
+  animation: fadein ease-out 0.2s 0.5s forwards;
 }
 
 #slot {
   max-width: 100%;
   opacity: 0;
-  animation: simple-fadein ease-out .2s .5s forwards
+  animation: simple-fadein ease-out 0.2s 0.5s forwards;
 }
 
 @keyframes fadein {
@@ -83,9 +83,9 @@ header {
 </style>
 <style>
 body {
-    margin: 0;
-    background: #2e2f3f;
-    color: #fff3db;
-    font-family: 'Zen Maru Gothic', sans-serif;
+  margin: 0;
+  background: #2e2f3f;
+  color: #fff3db;
+  font-family: 'Zen Maru Gothic', sans-serif;
 }
 </style>
