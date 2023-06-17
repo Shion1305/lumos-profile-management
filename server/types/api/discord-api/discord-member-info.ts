@@ -6,7 +6,7 @@ export interface DiscordMemberInfoResponse {
     nick?: string
     pending?: false
     premium_since?: string
-    roles: string[]
+    roles: number[]
     user?: {
         id: string
         username: string
