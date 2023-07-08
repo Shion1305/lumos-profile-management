@@ -8,6 +8,8 @@ import {
 
 const db = admin.firestore()
 
+const memberRoleID = Number(useRuntimeConfig().discord.memberRoleID)
+
 export default defineEventHandler(async (event) => {
   const errors = []
   const users = await db.collection('users').get()
@@ -36,12 +38,19 @@ export default defineEventHandler(async (event) => {
         discordProfile.id +
         '/' +
         discordProfile.avatar +
-        '.png'
+        '.png',
+      discord_member_role: false
     }
 
-    const discordNickname = await getDiscordServerInfo(newToken.access_token)
-    if (discordNickname && discordNickname.nick) {
-      updateData.discord_nickname = discordNickname.nick
+    const discordServerMemberInfo = await getDiscordServerInfo(
+      newToken.access_token
+    )
+    if (discordServerMemberInfo && discordServerMemberInfo.nick) {
+      updateData.discord_nickname = discordServerMemberInfo.nick
+      updateData.discord_member_role =
+        discordServerMemberInfo.roles?.findIndex(
+          (value) => value == memberRoleID
+        ) > -1
     }
 
     const refreshReq = await db

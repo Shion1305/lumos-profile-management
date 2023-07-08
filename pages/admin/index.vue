@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import axios from 'axios'
 import { UserProfile } from '~/types/user_profile'
 
@@ -19,13 +19,18 @@ console.log(members)
       <tr>
         <th>名前</th>
         <th>学籍番号</th>
-        <th>Discord</th>
-        <th>Discord Nickname</th>
         <th>LINE</th>
+        <th>Discord</th>
+        <th>Nickname</th>
+        <th>Role</th>
       </tr>
       <tr v-for="m in members">
         <td>{{ m.last_name }} {{ m.first_name }}</td>
         <td>{{ m.student_id }}</td>
+        <td>
+          <img :src="m.line_picture_url" alt="" />
+          {{ m.line_username }}
+        </td>
         <td>
           <img :src="m.discord_picture_url" alt="" />
           {{ m.discord_username }}
@@ -34,15 +39,14 @@ console.log(members)
           {{ m.discord_nickname }}
         </td>
         <td>
-          <img :src="m.line_picture_url" alt="" />
-          {{ m.line_username }}
+          {{ m.discord_member_role ? '✅' : '❌' }}
         </td>
       </tr>
     </table>
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 h2 {
   text-align: center;
 }

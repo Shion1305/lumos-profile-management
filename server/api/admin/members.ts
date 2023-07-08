@@ -24,6 +24,7 @@ export default defineEventHandler(async (event) => {
     const targetData = doc.data() as User
     exportData.discord_username = targetData.discord_username
     exportData.discord_nickname = targetData.discord_nickname
+    exportData.discord_member_role = targetData.discord_member_role
     exportData.discord_picture_url = targetData.discord_picture_url
     exportData.line_username = targetData.line_username
     exportData.line_picture_url = targetData.line_picture_url
