@@ -11,18 +11,34 @@ const db = admin.firestore()
 const memberRoleID = Number(useRuntimeConfig().discord.memberRoleID)
 
 export default defineEventHandler(async (event) => {
-  const errors = []
+  const usersFailed = await updateUsers()
+  if (usersFailed.length > 0) {
+    return {
+      status: 500,
+      body: {
+        message: 'discord token refresh failed for some users',
+        errors: usersFailed
+      }
+    }
+  }
+  return {
+    status: 200
+  }
+})
+
+async function updateUsers(): Promise<string[]> {
+  const usersFailed: string[] = []
   const users = await db.collection('users').get()
   for (const user of users.docs) {
     const userData = user.data() as User
     const newToken = await refreshDiscordToken(userData.discord_refresh_token)
     if (!newToken) {
-      errors.push(user.id)
+      usersFailed.push(user.id)
       continue
     }
     const discordProfile = await getDiscordUserInfo(newToken.access_token)
     if (!discordProfile) {
-      errors.push(user.id)
+      usersFailed.push(user.id)
       continue
     }
     const updateData = {
@@ -58,20 +74,9 @@ export default defineEventHandler(async (event) => {
       .doc(user.id)
       .update(updateData)
     if (!refreshReq) {
-      errors.push(user.id)
+      usersFailed.push(user.id)
     }
     console.log('refreshed token for user ' + user.id)
   }
-  if (errors.length > 0) {
-    return {
-      status: 500,
-      body: {
-        message: 'discord token refresh failed for some users',
-        errors: errors
-      }
-    }
-  }
-  return {
-    status: 200
-  }
-})
+  return usersFailed
+}
