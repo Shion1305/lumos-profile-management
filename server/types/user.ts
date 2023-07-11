@@ -11,6 +11,7 @@ export interface User {
   line_picture_url: string
   discord_username: string
   discord_nickname?: string
+  discord_member_role: boolean
   discord_service_id: string
   discord_access_token: string
   discord_refresh_token: string

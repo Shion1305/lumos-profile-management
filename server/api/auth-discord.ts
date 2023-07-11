@@ -12,6 +12,8 @@ import cookie from 'cookie'
 
 const db = admin.firestore()
 
+const memberRoleID = Number(useRuntimeConfig().discord.memberRoleID)
+
 export default defineEventHandler(async (event) => {
   const code: string = getQuery(event).code as string
   const discordTokenResp: DiscordAccessTokenResponse | null =
@@ -40,11 +42,27 @@ export default defineEventHandler(async (event) => {
     .where('discord_service_id', '==', discordUser.id)
     .get()
   var userID: string
+
+  console.log('memberRoleID', memberRoleID)
+  var hasMemberRole = serverProfile.roles.some((role) => {
+    return role == memberRoleID
+  })
   if (qResult.empty || qResult.size == 0) {
-    userID = await createUser(discordTokenResp, discordUser, serverProfile.nick)
+    userID = await createUser(
+      discordTokenResp,
+      discordUser,
+      serverProfile.nick,
+      hasMemberRole
+    )
   } else {
     userID = qResult.docs[0].id
-    await updateUser(userID, discordTokenResp, discordUser, serverProfile.nick)
+    await updateUser(
+      userID,
+      discordTokenResp,
+      discordUser,
+      serverProfile.nick,
+      hasMemberRole
+    )
   }
   const token: string = generateToken(userID)
   const serializedCookie = cookie.serialize('authToken', token, {
@@ -62,8 +80,10 @@ async function updateUser(
   userID: string,
   tokenResp: DiscordAccessTokenResponse,
   userResp: DiscordUserResponse,
-  nickname: string | undefined
+  nickname: string | undefined,
+  memberRole: boolean
 ): Promise<void> {
+  console.log('updateUser', 'hasMemberRole', memberRole)
   await db
     .collection('users')
     .doc(userID)
@@ -79,7 +99,8 @@ async function updateUser(
         '/' +
         userResp.avatar +
         '.png',
-      discord_nickname: nickname
+      discord_nickname: nickname,
+      discord_member_role: memberRole
     })
     .then((docRef) => {
       console.log('Document written with ID: ', userID)
@@ -92,7 +113,8 @@ async function updateUser(
 async function createUser(
   tokenResp: DiscordAccessTokenResponse,
   userResp: DiscordUserResponse,
-  nickname: string | undefined
+  nickname: string | undefined,
+  memberRole: boolean
 ): Promise<string> {
   const newUser: User = {} as User
   newUser.discord_username = userResp.username + ' #' + userResp.discriminator
@@ -108,6 +130,7 @@ async function createUser(
     '.png'
   newUser.discord_nickname = nickname
   newUser.has_access = false
+  newUser.discord_member_role = memberRole
   return await db
     .collection('users')
     .add(newUser)

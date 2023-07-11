@@ -8,6 +8,7 @@ export interface UserProfile {
   line_username?: string
   line_picture_url?: string
   has_access?: boolean
+  discord_member_role?: boolean
 }
 
 export function fulfillsRequirements(userProfile: UserProfile): boolean {
