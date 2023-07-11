@@ -4,7 +4,7 @@ import {
   getAccessToken,
   getDiscordServerInfo,
   getDiscordUserInfo
-} from '~/server/pkg/discord-auth'
+} from '~/server/pkg/discord/api-user'
 import { DiscordUserResponse } from '~/server/types/api/discord-api/discord-user'
 import { DiscordAccessTokenResponse } from '~/server/types/api/discord-api/discord-token'
 import { generateToken } from '~/server/pkg/jwt'

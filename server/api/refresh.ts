@@ -4,7 +4,7 @@ import {
   getDiscordServerInfo,
   getDiscordUserInfo,
   refreshDiscordToken
-} from '~/server/pkg/discord-auth'
+} from '~/server/pkg/discord/api-user'
 
 const db = admin.firestore()
 
