@@ -23,6 +23,7 @@ export default defineNuxtConfig({
       secret: process.env.JWT_SECRET
     },
     discord: {
+      botToken: process.env.DISCORD_BOT_TOKEN,
       clientID: process.env.DISCORD_CLIENT_ID,
       callbackURI: process.env.DISCORD_CALLBACK_URI,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
