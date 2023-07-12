@@ -43,12 +43,14 @@ export default defineEventHandler(async (event) => {
           return role == memberRoleID
         }
       )!
+      console.log(targetDiscordMemberData?.avatar)
       exportData.discord_picture_url =
         'https://cdn.discordapp.com/avatars/' +
-          targetDiscordMemberData?.user?.id +
-          '/' +
-          targetDiscordMemberData?.avatar ??
-        targetDiscordMemberData?.user?.avatar + '.png'
+        targetDiscordMemberData?.user?.id +
+        '/' +
+        (String(targetDiscordMemberData?.avatar) !== 'null'
+          ? targetDiscordMemberData?.avatar
+          : targetDiscordMemberData?.user?.avatar)
       exportData.discord_on_server = true
     } else {
       exportData.discord_username = userdataFromDB.discord_username
