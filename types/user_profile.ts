@@ -3,6 +3,7 @@ export interface UserProfile {
   last_name?: string
   student_id?: number
   discord_username?: string
+  discord_global_name?: string
   discord_nickname?: string
   discord_picture_url?: string
   discord_member_role?: boolean

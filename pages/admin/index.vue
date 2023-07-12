@@ -34,7 +34,7 @@ console.log(members)
         </td>
         <td>
           <img :src="m.discord_picture_url" alt="" />
-          {{ m.discord_username }}
+          {{ m.discord_global_name ?? m.discord_username }}
         </td>
         <td>
           {{ m.discord_on_server ? '✅' : '❌' }}
