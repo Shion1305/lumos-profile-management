@@ -12,8 +12,6 @@ import cookie from 'cookie'
 
 const db = admin.firestore()
 
-const memberRoleID = Number(useRuntimeConfig().discord.memberRoleID)
-
 export default defineEventHandler(async (event) => {
   const code: string = getQuery(event).code as string
   const discordTokenResp: DiscordAccessTokenResponse | null =
@@ -43,26 +41,11 @@ export default defineEventHandler(async (event) => {
     .get()
   var userID: string
 
-  console.log('memberRoleID', memberRoleID)
-  var hasMemberRole = serverProfile.roles.some((role) => {
-    return role == memberRoleID
-  })
   if (qResult.empty || qResult.size == 0) {
-    userID = await createUser(
-      discordTokenResp,
-      discordUser,
-      serverProfile.nick,
-      hasMemberRole
-    )
+    userID = await createUser(discordTokenResp, discordUser)
   } else {
     userID = qResult.docs[0].id
-    await updateUser(
-      userID,
-      discordTokenResp,
-      discordUser,
-      serverProfile.nick,
-      hasMemberRole
-    )
+    await updateUser(userID, discordTokenResp)
   }
   const token: string = generateToken(userID)
   const serializedCookie = cookie.serialize('authToken', token, {
@@ -78,29 +61,15 @@ export default defineEventHandler(async (event) => {
 
 async function updateUser(
   userID: string,
-  tokenResp: DiscordAccessTokenResponse,
-  userResp: DiscordUserResponse,
-  nickname: string | undefined,
-  memberRole: boolean
+  tokenResp: DiscordAccessTokenResponse
 ): Promise<void> {
-  console.log('updateUser', 'hasMemberRole', memberRole)
   await db
     .collection('users')
     .doc(userID)
     .update({
-      discord_username: userResp.username + ' #' + userResp.discriminator,
-      discord_service_id: userResp.id,
       discord_access_token: tokenResp.access_token,
       discord_refresh_token: tokenResp.refresh_token,
-      discord_expires_at: Date.now() / 1000 + tokenResp.expires_in,
-      discord_picture_url:
-        'https://cdn.discordapp.com/avatars/' +
-        userResp.id +
-        '/' +
-        userResp.avatar +
-        '.png',
-      discord_nickname: nickname,
-      discord_member_role: memberRole
+      discord_expires_at: Date.now() / 1000 + tokenResp.expires_in
     })
     .then((docRef) => {
       console.log('Document written with ID: ', userID)
@@ -112,25 +81,14 @@ async function updateUser(
 
 async function createUser(
   tokenResp: DiscordAccessTokenResponse,
-  userResp: DiscordUserResponse,
-  nickname: string | undefined,
-  memberRole: boolean
+  userResp: DiscordUserResponse
 ): Promise<string> {
   const newUser: User = {} as User
-  newUser.discord_username = userResp.username + ' #' + userResp.discriminator
   newUser.discord_service_id = userResp.id
   newUser.discord_access_token = tokenResp.access_token
   newUser.discord_refresh_token = tokenResp.refresh_token
   newUser.discord_expires_at = Date.now() / 1000 + tokenResp.expires_in
-  newUser.discord_picture_url =
-    'https://cdn.discordapp.com/avatars/' +
-    userResp.id +
-    '/' +
-    userResp.avatar +
-    '.png'
-  newUser.discord_nickname = nickname
   newUser.has_access = false
-  newUser.discord_member_role = memberRole
   return await db
     .collection('users')
     .add(newUser)
