@@ -1,7 +1,6 @@
 import admin from '~/server/pkg/firebase-admin'
 import { User } from '~/server/types/user'
 import {
-  getDiscordServerInfo,
   getDiscordUserInfo,
   refreshDiscordToken
 } from '~/server/pkg/discord/api-user'
@@ -42,31 +41,9 @@ async function updateUsers(): Promise<string[]> {
       continue
     }
     const updateData = {
-      discord_username:
-        discordProfile.username + ' #' + discordProfile.discriminator,
-      discord_nickname: '',
-      discord_service_id: discordProfile.id,
       discord_access_token: newToken.access_token,
       discord_refresh_token: newToken.refresh_token,
-      discord_expires_at: Math.floor(Date.now() / 1000) + newToken.expires_in,
-      discord_picture_url:
-        'https://cdn.discordapp.com/avatars/' +
-        discordProfile.id +
-        '/' +
-        discordProfile.avatar +
-        '.png',
-      discord_member_role: false
-    }
-
-    const discordServerMemberInfo = await getDiscordServerInfo(
-      newToken.access_token
-    )
-    if (discordServerMemberInfo && discordServerMemberInfo.nick) {
-      updateData.discord_nickname = discordServerMemberInfo.nick
-      updateData.discord_member_role =
-        discordServerMemberInfo.roles?.findIndex(
-          (value) => value == memberRoleID
-        ) > -1
+      discord_expires_at: Math.floor(Date.now() / 1000) + newToken.expires_in
     }
 
     const refreshReq = await db
