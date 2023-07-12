@@ -118,29 +118,6 @@ async function refreshDiscordToken(
     })
 }
 
-async function listGuildMembers(
-  token: string
-): Promise<DiscordUserResponse | null> {
-  const url: string = 'https://discordapp.com/api/users/@me'
-  return await axios
-    .get(url, {
-      headers: {
-        Authorization: 'Bearer ' + token
-      }
-    })
-    .then((response) => {
-      return response.data as DiscordUserResponse
-    })
-    .catch((error) => {
-      console.log(
-        'getDiscordUserInfo failed (status, error): ',
-        error.response.status,
-        error.response.data
-      )
-      return null
-    })
-}
-
 export {
   getAccessToken,
   getDiscordUserInfo,

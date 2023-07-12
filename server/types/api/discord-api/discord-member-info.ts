@@ -1,5 +1,5 @@
 export interface DiscordMemberInfoResponse {
-  avatar?: boolean
+  avatar?: string
   communication_disabled_until?: boolean
   flags: number
   joined_at: string
