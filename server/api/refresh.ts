@@ -41,6 +41,8 @@ async function updateUsers(): Promise<string[]> {
       continue
     }
     const updateData = {
+      discord_username: discordProfile.username,
+      discord_service_id: discordProfile.id,
       discord_access_token: newToken.access_token,
       discord_refresh_token: newToken.refresh_token,
       discord_expires_at: Math.floor(Date.now() / 1000) + newToken.expires_in

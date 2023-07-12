@@ -51,8 +51,8 @@ export default defineEventHandler(async (event) => {
         targetDiscordMemberData?.user?.avatar + '.png'
       exportData.discord_on_server = true
     } else {
-      exportData.discord_username = 'unknown'
-      exportData.discord_nickname = 'unknown'
+      exportData.discord_username = userdataFromDB.discord_username
+      exportData.discord_nickname = ''
       exportData.discord_member_role = false
       exportData.discord_picture_url = ''
       exportData.discord_on_server = false

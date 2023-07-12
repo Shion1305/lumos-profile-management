@@ -84,6 +84,7 @@ async function createUser(
   userResp: DiscordUserResponse
 ): Promise<string> {
   const newUser: User = {} as User
+  newUser.discord_username = userResp.username
   newUser.discord_service_id = userResp.id
   newUser.discord_access_token = tokenResp.access_token
   newUser.discord_refresh_token = tokenResp.refresh_token
