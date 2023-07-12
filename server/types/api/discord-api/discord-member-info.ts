@@ -10,8 +10,7 @@ export interface DiscordMemberInfoResponse {
   user?: {
     id: string
     username: string
-    global_name: boolean
-    display_name: boolean
+    global_name?: string
     avatar: string
     discriminator: string
     public_flags: number

@@ -32,25 +32,23 @@ export default defineEventHandler(async (event) => {
   await usersSnapshot.forEach((doc) => {
     const exportData = {} as UserProfile
     const userdataFromDB = doc.data() as User
-    const targetDiscordMemberData = guildMembersData.find((member) => {
+    const discordMemberData = guildMembersData.find((member) => {
       return member.user?.id == userdataFromDB.discord_service_id
     })
-    if (targetDiscordMemberData) {
-      exportData.discord_username = targetDiscordMemberData?.user?.username!
-      exportData.discord_nickname = targetDiscordMemberData?.nick
-      exportData.discord_member_role = targetDiscordMemberData?.roles.some(
-        (role) => {
-          return role == memberRoleID
-        }
-      )!
-      console.log(targetDiscordMemberData?.avatar)
+    if (discordMemberData) {
+      exportData.discord_username = discordMemberData.user?.username!
+      exportData.discord_global_name = discordMemberData.user?.global_name
+      exportData.discord_nickname = discordMemberData.nick
+      exportData.discord_member_role = discordMemberData.roles.some((role) => {
+        return role == memberRoleID
+      })!
       exportData.discord_picture_url =
         'https://cdn.discordapp.com/avatars/' +
-        targetDiscordMemberData?.user?.id +
+        discordMemberData.user?.id +
         '/' +
-        (String(targetDiscordMemberData?.avatar) !== 'null'
-          ? targetDiscordMemberData?.avatar
-          : targetDiscordMemberData?.user?.avatar)
+        (String(discordMemberData.avatar) !== 'null'
+          ? discordMemberData.avatar
+          : discordMemberData.user?.avatar)
       exportData.discord_on_server = true
     } else {
       exportData.discord_username = userdataFromDB.discord_username
