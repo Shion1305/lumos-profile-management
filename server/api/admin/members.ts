@@ -35,19 +35,28 @@ export default defineEventHandler(async (event) => {
     const targetDiscordMemberData = guildMembersData.find((member) => {
       return member.user?.id == userdataFromDB.discord_service_id
     })
-    exportData.discord_username = targetDiscordMemberData?.user?.username!
-    exportData.discord_nickname = targetDiscordMemberData?.nick
-    exportData.discord_member_role = targetDiscordMemberData?.roles.some(
-      (role) => {
-        return role === memberRoleID
-      }
-    )!
-    exportData.discord_picture_url =
-      'https://cdn.discordapp.com/avatars/' +
-        targetDiscordMemberData?.user?.id +
-        '/' +
-        targetDiscordMemberData?.avatar ??
-      targetDiscordMemberData?.user?.avatar + '.png'
+    if (targetDiscordMemberData) {
+      exportData.discord_username = targetDiscordMemberData?.user?.username!
+      exportData.discord_nickname = targetDiscordMemberData?.nick
+      exportData.discord_member_role = targetDiscordMemberData?.roles.some(
+        (role) => {
+          return role == memberRoleID
+        }
+      )!
+      exportData.discord_picture_url =
+        'https://cdn.discordapp.com/avatars/' +
+          targetDiscordMemberData?.user?.id +
+          '/' +
+          targetDiscordMemberData?.avatar ??
+        targetDiscordMemberData?.user?.avatar + '.png'
+      exportData.discord_on_server = true
+    } else {
+      exportData.discord_username = 'unknown'
+      exportData.discord_nickname = 'unknown'
+      exportData.discord_member_role = false
+      exportData.discord_picture_url = ''
+      exportData.discord_on_server = false
+    }
     exportData.line_username = userdataFromDB.line_username
     exportData.line_picture_url = userdataFromDB.line_picture_url
     exportData.student_id = userdataFromDB.student_id

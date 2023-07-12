@@ -21,6 +21,7 @@ console.log(members)
         <th>学籍番号</th>
         <th>LINE</th>
         <th>Discord</th>
+        <th>Joined</th>
         <th>Nickname</th>
         <th>Role</th>
       </tr>
@@ -34,6 +35,9 @@ console.log(members)
         <td>
           <img :src="m.discord_picture_url" alt="" />
           {{ m.discord_username }}
+        </td>
+        <td>
+          {{ m.discord_on_server ? '✅' : '❌' }}
         </td>
         <td>
           {{ m.discord_nickname }}

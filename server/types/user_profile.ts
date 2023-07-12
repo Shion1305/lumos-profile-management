@@ -4,8 +4,9 @@ export interface UserProfile {
   student_id: number
   discord_username: string
   discord_nickname?: string
-  discord_member_role: boolean
   discord_picture_url: string
+  discord_member_role: boolean
+  discord_on_server: boolean
   line_username: string
   line_picture_url: string
   has_access: boolean
