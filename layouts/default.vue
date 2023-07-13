@@ -15,7 +15,6 @@
 
 <style scoped lang="scss">
 #root-frame {
-  width: 100lvw;
   height: 100lvh;
   display: flex;
 
