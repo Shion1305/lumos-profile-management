@@ -1,12 +1,12 @@
 import admin from '~/server/pkg/firebase-admin'
-import { User } from '~/server/types/user'
+import type { User } from '~/server/types/user'
 import {
   getAccessToken,
   getDiscordServerInfo,
   getDiscordUserInfo
 } from '~/server/pkg/discord/api-user'
-import { DiscordUserResponse } from '~/server/types/api/discord-api/discord-user'
-import { DiscordAccessTokenResponse } from '~/server/types/api/discord-api/discord-token'
+import type { DiscordUserResponse } from '~/server/types/api/discord-api/discord-user'
+import type { DiscordAccessTokenResponse } from '~/server/types/api/discord-api/discord-token'
 import { generateToken } from '~/server/pkg/jwt'
 import cookie from 'cookie'
 

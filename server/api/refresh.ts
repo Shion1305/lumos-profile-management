@@ -1,5 +1,5 @@
 import admin from '~/server/pkg/firebase-admin'
-import { User } from '~/server/types/user'
+import type { User } from '~/server/types/user'
 import {
   getDiscordUserInfo,
   refreshDiscordToken

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { JWTPayload } from 'jose'
+import type { JWTPayload } from 'jose'
 
 const config = useRuntimeConfig()
 

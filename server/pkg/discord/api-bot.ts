@@ -1,4 +1,4 @@
-import { DiscordMemberInfoResponse } from '~/server/types/api/discord-api/discord-member-info'
+import type { DiscordMemberInfoResponse } from '~/server/types/api/discord-api/discord-member-info'
 import axios from 'axios'
 
 const token = useRuntimeConfig().discord.botToken
