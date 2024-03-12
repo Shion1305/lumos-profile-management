@@ -1,7 +1,7 @@
 import admin from '~/server/pkg/firebase-admin'
-import { User } from '~/server/types/user'
-import { UserProfile } from '~/server/types/user_profile'
-import { MutateRequest } from '~/server/types/api/internal/mutate'
+import type { User } from '~/server/types/user'
+import type { UserProfile } from '~/server/types/user_profile'
+import type { MutateRequest } from '~/server/types/api/internal/mutate'
 
 const db = admin.firestore()
 

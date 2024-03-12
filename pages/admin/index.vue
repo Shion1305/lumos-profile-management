@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import axios from 'axios'
-import { UserProfile } from '~/types/user_profile'
+import type { UserProfile } from '~/types/user_profile'
 
 const { data: membersData, error } = await axios
   .get('/api/admin/members')
