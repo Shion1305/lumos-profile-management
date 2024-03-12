@@ -1,6 +1,6 @@
-import { LineTokenResponse } from '~/server/types/api/line-api/line-token'
+import type { LineTokenResponse } from '~/server/types/api/line-api/line-token'
 import axios from 'axios'
-import { LineUserProfileResponse } from '~/server/types/api/line-api/line-user'
+import type { LineUserProfileResponse } from '~/server/types/api/line-api/line-user'
 
 async function getAccessToken(code: string): Promise<LineTokenResponse> {
   const config = useRuntimeConfig()

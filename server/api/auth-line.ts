@@ -1,8 +1,8 @@
 import { sendError } from 'h3'
 import admin from '~/server/pkg/firebase-admin'
 import { getAccessToken, getLineUserInfo } from '~/server/pkg/line-auth'
-import { LineTokenResponse } from '~/server/types/api/line-api/line-token'
-import { LineUserProfileResponse } from '~/server/types/api/line-api/line-user'
+import type { LineTokenResponse } from '~/server/types/api/line-api/line-token'
+import type { LineUserProfileResponse } from '~/server/types/api/line-api/line-user'
 
 const db = admin.firestore()
 

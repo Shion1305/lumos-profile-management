@@ -1,7 +1,7 @@
-import { DiscordAccessTokenResponse } from '~/server/types/api/discord-api/discord-token'
-import { DiscordUserResponse } from '~/server/types/api/discord-api/discord-user'
+import type { DiscordAccessTokenResponse } from '~/server/types/api/discord-api/discord-token'
+import type { DiscordUserResponse } from '~/server/types/api/discord-api/discord-user'
 import axios from 'axios'
-import { DiscordMemberInfoResponse } from '~/server/types/api/discord-api/discord-member-info'
+import type { DiscordMemberInfoResponse } from '~/server/types/api/discord-api/discord-member-info'
 
 async function getAccessToken(
   code: string
