@@ -1,11 +1,11 @@
-import admin from '~/server/pkg/firebase-admin'
+import firestore from '~/server/pkg/firebase-admin'
 import type { User } from '~/server/types/user'
 import {
   getDiscordUserInfo,
   refreshDiscordToken
 } from '~/server/pkg/discord/api-user'
 
-const db = admin.firestore()
+const db = firestore
 
 const memberRoleID = Number(useRuntimeConfig().discord.memberRoleID)
 

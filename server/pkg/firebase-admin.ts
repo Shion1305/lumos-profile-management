@@ -1,5 +1,6 @@
 import admin from 'firebase-admin'
 import * as fs from 'fs'
+import { getFirestore } from 'firebase-admin/firestore'
 
 const config = useRuntimeConfig()
 // read json file from FileSystem and parse it as json object
@@ -16,4 +17,7 @@ if (config.firebase_admin.certPath) {
   admin.initializeApp()
 }
 
-export default admin
+// databaseID is hardcoded here to avoid using default database
+const firestore = getFirestore('lumos-2024')
+
+export default firestore
