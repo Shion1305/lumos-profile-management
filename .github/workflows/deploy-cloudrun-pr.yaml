@@ -1,8 +1,12 @@
-name: Deploy to Cloud Run
+name: Deploy to Cloud Run (PR preview)
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types:
+      - opened
+      - synchronize
+      - reopened
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -46,7 +50,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: asia-northeast1-docker.pkg.dev/lumos-profile-management/main/nuxt3-release:latest
+          tags: asia-northeast1-docker.pkg.dev/lumos-profile-management/main/nuxt3-stg-pr-${{ github.event.number }}:latest
           context: .
           file: ./cloudrun/Dockerfile
 
@@ -55,9 +59,17 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           region: asia-northeast1
-          service: release
-          image: asia-northeast1-docker.pkg.dev/lumos-profile-management/main/nuxt3-release:latest
+          service: stg-pr-${{ github.event.number }}
+          image: asia-northeast1-docker.pkg.dev/lumos-profile-management/main/nuxt3-stg-pr-${{ github.event.number }}:latest
+          env_vars_file: .env
 
       - name: Make CloudRun accessible
         run: |
-          gcloud run services add-iam-policy-binding release --region=asia-northeast1 --member=allUsers --role=roles/run.invoker
+          gcloud run services add-iam-policy-binding stg-pr-${{ github.event.number }} --region=asia-northeast1 --member=allUsers --role=roles/run.invoker
+
+      - name: Post comments
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: ${{ github.event.pull_request.html_url }}
+        run:
+          gh pr comment -b "Deployed on ${{ steps.deploy.outputs.url }}" ${{ github.event.number }}

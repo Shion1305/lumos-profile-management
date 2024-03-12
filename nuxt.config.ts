@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['@nuxtjs/google-fonts'],
-  ssr: true,
+  ssr: false,
   runtimeConfig: {
     public: {
       line: {
