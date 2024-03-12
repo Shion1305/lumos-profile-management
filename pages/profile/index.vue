@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { fulfillsRequirements, UserProfile } from '~/types/user_profile'
+import { fulfillsRequirements, type UserProfile } from '~/types/user_profile'
 import axios from 'axios'
 import LineWidget from '~/components/LineWidget.vue'
 import DiscordWidget from '~/components/DiscordWidget.vue'

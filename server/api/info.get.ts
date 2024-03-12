@@ -1,6 +1,6 @@
 import admin from '~/server/pkg/firebase-admin'
-import { User } from '~/server/types/user'
-import { UserProfile } from '~/server/types/user_profile'
+import type { User } from '~/server/types/user'
+import type { UserProfile } from '~/server/types/user_profile'
 
 const db = admin.firestore()
 
