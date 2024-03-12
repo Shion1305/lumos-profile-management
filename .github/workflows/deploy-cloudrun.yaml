@@ -38,6 +38,10 @@ jobs:
           password: ${{ steps.auth.outputs.access_token }}
           registry: asia-northeast1-docker.pkg.dev
 
+      - name: create .env file
+        run: |
+          echo "${{ secrets.ENV_VARS }}" > .env
+
       - name: Build and push Docker image for nginx
         uses: docker/build-push-action@v5
         with:
@@ -45,10 +49,6 @@ jobs:
           tags: asia-northeast1-docker.pkg.dev/lumos-profile-management/main/nuxt3-release:latest
           context: .
           file: ./cloudrun/Dockerfile
-
-      - name: create .env file
-        run: |
-          echo "${{ secrets.ENV_VARS }}" > .env
 
       - name: Deploy to Cloud Run
         id: deploy
