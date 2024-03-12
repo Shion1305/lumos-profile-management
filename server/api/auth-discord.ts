@@ -1,4 +1,4 @@
-import admin from '~/server/pkg/firebase-admin'
+import firestore from '~/server/pkg/firebase-admin'
 import type { User } from '~/server/types/user'
 import {
   getAccessToken,
@@ -10,7 +10,7 @@ import type { DiscordAccessTokenResponse } from '~/server/types/api/discord-api/
 import { generateToken } from '~/server/pkg/jwt'
 import cookie from 'cookie'
 
-const db = admin.firestore()
+const db = firestore
 
 export default defineEventHandler(async (event) => {
   const code: string = getQuery(event).code as string

@@ -1,10 +1,10 @@
 import { sendError } from 'h3'
-import admin from '~/server/pkg/firebase-admin'
+import firestore from '~/server/pkg/firebase-admin'
 import { getAccessToken, getLineUserInfo } from '~/server/pkg/line-auth'
 import type { LineTokenResponse } from '~/server/types/api/line-api/line-token'
 import type { LineUserProfileResponse } from '~/server/types/api/line-api/line-user'
 
-const db = admin.firestore()
+const db = firestore
 
 export default defineEventHandler(async (event) => {
   if (!event.context.userID) {

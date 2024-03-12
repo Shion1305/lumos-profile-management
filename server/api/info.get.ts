@@ -1,8 +1,8 @@
-import admin from '~/server/pkg/firebase-admin'
+import firestore from '~/server/pkg/firebase-admin'
 import type { User } from '~/server/types/user'
 import type { UserProfile } from '~/server/types/user_profile'
 
-const db = admin.firestore()
+const db = firestore
 
 export default defineEventHandler(async (event) => {
   const userID = event.context.userID

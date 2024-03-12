@@ -1,9 +1,9 @@
-import admin from '~/server/pkg/firebase-admin'
+import firestore from '~/server/pkg/firebase-admin'
 import type { User } from '~/server/types/user'
 import type { UserProfile } from '~/server/types/user_profile'
 import type { MutateRequest } from '~/server/types/api/internal/mutate'
 
-const db = admin.firestore()
+const db = firestore
 
 export default defineEventHandler(async (event) => {
   if (!event.context.userID) {
