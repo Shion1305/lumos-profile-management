@@ -42,7 +42,7 @@ jobs:
         run: |
           echo "${{ secrets.ENV_VARS }}" > .env
 
-      - name: Build and push Docker image for nginx
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           push: true
@@ -57,7 +57,6 @@ jobs:
           region: asia-northeast1
           service: release
           image: asia-northeast1-docker.pkg.dev/lumos-profile-management/main/nuxt3-release:latest
-          env_vars_file: .env
 
       - name: Make CloudRun accessible
         run: |
