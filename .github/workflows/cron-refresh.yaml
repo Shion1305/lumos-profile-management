@@ -1,0 +1,24 @@
+name: Run refresh Everyday
+
+on:
+  schedule:
+    - cron: '30 6 * * *'  # 5分ごとに実行
+
+jobs:
+  access_refresh_endpoint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Access the endpoint
+        run: |
+          response=$(curl -s -w "%{http_code}" -o response.txt https://lumos-profile.shion.pro/api/refresh)
+          status_code=$(echo "$response" | tail -c 3)
+          echo "Status Code: $status_code"
+          
+          echo "Response Content:"
+          cat response.txt
+          
+          if [ "$status_code" -ne 200 ]; then
+            echo "Error: Unexpected status code $status_code"
+            exit 1
+          fi
