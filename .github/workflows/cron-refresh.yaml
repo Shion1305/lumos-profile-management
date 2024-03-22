@@ -2,7 +2,7 @@ name: Run refresh Everyday
 
 on:
   schedule:
-    - cron: '30 6 * * *'  # 5分ごとに実行
+    - cron: '42 21 * * *'
 
 jobs:
   access_refresh_endpoint:
