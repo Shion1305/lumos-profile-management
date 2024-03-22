@@ -15,9 +15,9 @@ export default defineEventHandler(async (event) => {
     return sendError(event, new Error('user not found'))
   }
   const userData: User = snapshot.data() as User
-  return {
+
+  const resp = {
     discord_username: userData.discord_username,
-    discord_picture_url: userData.discord_picture_url,
     line_username: userData.line_username,
     line_picture_url: userData.line_picture_url,
     student_id: userData.student_id,
@@ -25,4 +25,13 @@ export default defineEventHandler(async (event) => {
     last_name: userData.last_name,
     has_access: userData.has_access
   } as UserProfile
+
+  if (userData.discord_avatar) {
+    resp.discord_picture_url =
+      'https://cdn.discordapp.com/avatars/' +
+      userData.discord_service_id +
+      '/' +
+      userData.discord_avatar
+  }
+  return resp
 })

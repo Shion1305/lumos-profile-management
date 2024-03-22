@@ -9,6 +9,7 @@ export interface User {
   line_refresh_token: string
   line_expires_at: number
   line_picture_url: string
+  discord_avatar: string
   discord_username: string
   discord_service_id: string
   discord_access_token: string

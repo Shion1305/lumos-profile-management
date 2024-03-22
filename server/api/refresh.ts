@@ -41,6 +41,7 @@ async function updateUsers(): Promise<string[]> {
       continue
     }
     const updateData = {
+      discord_avatar: discordProfile.avatar,
       discord_username: discordProfile.username,
       discord_service_id: discordProfile.id,
       discord_access_token: newToken.access_token,
