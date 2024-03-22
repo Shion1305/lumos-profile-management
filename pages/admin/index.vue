@@ -2,14 +2,14 @@
 import axios from 'axios'
 import type { UserProfile } from '~/types/user_profile'
 
-const { data: membersData, error } = await axios
-  .get('/api/admin/members')
+const members: UserProfile[] = await axios
+  .get<UserProfile[]>('/api/admin/members')
+  .then((res) => res.data)
   .catch((error) => {
     console.log('error in getting members', error)
-    useRouter().push('/profile')
+    return []
   })
-const members = membersData as UserProfile[]
-console.log(members)
+if (members.length === 0) useRouter().push('/profile')
 </script>
 
 <template>
@@ -25,7 +25,7 @@ console.log(members)
         <th>Nickname</th>
         <th>Role</th>
       </tr>
-      <tr v-for="m in members">
+      <tr v-for="m in members as UserProfile[]">
         <td>{{ m.last_name }} {{ m.first_name }}</td>
         <td>{{ m.student_id }}</td>
         <td>
