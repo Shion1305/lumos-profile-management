@@ -28,6 +28,10 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
+      - name: create .env file
+        run: |
+          echo "${{ secrets.ENV_VARS }}" > .env
+
       - name: Install dependencies and build
         run: |
           pnpm install
@@ -56,10 +60,6 @@ jobs:
           username: 'oauth2accesstoken'
           password: ${{ steps.auth.outputs.access_token }}
           registry: asia-northeast1-docker.pkg.dev
-
-      - name: create .env file
-        run: |
-          echo "${{ secrets.ENV_VARS }}" > .env
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
