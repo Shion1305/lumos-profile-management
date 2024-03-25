@@ -11,9 +11,7 @@ jobs:
     steps:
       - name: Access the endpoint
         run: |
-          response=$(curl -s -w "%{http_code}" -o response.txt https://lumos-profile.shion.pro/api/refresh)
-          status_code=$(echo "$response" | tail -c 3)
-          echo "Status Code: $status_code"
+          status_code=$(curl -s -w "%{http_code}" -o response.txt https://lumos-profile.shion.pro/api/refresh)
           
           echo "Response Content:"
           cat response.txt
