@@ -10,7 +10,7 @@ jobs:
   run-terraform-apply:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write
       pull-requests: write
     steps:
