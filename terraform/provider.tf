@@ -6,8 +6,8 @@ provider "google" {
 terraform {
   required_version = ">= 1.8.0"
 
-  backend "local" {
-    path = "state/terraform.tfstate"
+  backend "gcs" {
+    bucket = "lumos-profile-management-tf-state"
   }
 
   required_providers {

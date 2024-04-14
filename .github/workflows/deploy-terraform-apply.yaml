@@ -60,20 +60,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: tfcmt apply -- terraform apply -auto-approve
-
-      - name: Check diff
-        id: check_diff
-        run: git diff --exit-code ./terraform/state
-        continue-on-error: true
-
-      - name: exit if no diff
-        if: steps.check_diff.outcome == 'failure'
-        run: exit 0
-
-      - name: Commit and push
-        run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git add terraform/state
-          git commit -m "🧱 Update terraform state"
-          git push origin main
