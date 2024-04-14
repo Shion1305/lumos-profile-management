@@ -6,7 +6,7 @@ on:
     paths:
       - 'terraform/**'
 jobs:
-  build-and-deploy:
+  run-terraform-apply:
     runs-on: ubuntu-latest
     permissions:
       contents: read
