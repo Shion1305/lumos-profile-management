@@ -32,23 +32,30 @@ if (members.length === 0) useRouter().push('/profile')
 <template>
   <h2>Members List</h2>
   <v-data-table
-    class="rounded-lg"
     :headers="[
-      { title: '名前', key: 'name' },
-      { title: '学籍番号', key: 'student_id' },
-      { title: 'LINE', key: 'line' },
-      { title: 'Discord', key: 'discord' },
-      { title: 'Admin', key: 'has_access' }
+      { title: '名前', value: 'name', sortable: true },
+      { title: '学籍番号', value: 'student_id', sortable: true },
+      {
+        title: 'LINE',
+        value: 'line',
+        headerProps: { align: 'center' },
+        sortable: true
+      },
+      {
+        title: 'Discord',
+        align: 'center',
+        children: [
+          { title: '', value: 'discord_img' },
+          { title: 'Username', value: 'discord', sortable: true },
+          { title: 'Nickname', value: 'discord_nick', sortable: true }
+        ]
+      },
+      { title: 'Admin', value: 'has_access', sortable: true }
     ]"
     :items="members"
     :items-per-page="-1"
+    class="rounded-lg"
   >
-    <template v-slot:header.discord>
-      <div class="text-center font-weight-bold text-subtitle-1">Discord</div>
-    </template>
-    <template v-slot:header.line>
-      <div class="text-center font-weight-bold text-subtitle-1">LINE</div>
-    </template>
     <template v-slot:item.line="{ item }">
       <div class="d-flex flex-row pa-1 align-center">
         <v-img
@@ -60,16 +67,17 @@ if (members.length === 0) useRouter().push('/profile')
         <div class="line-label">{{ item.line }}</div>
       </div>
     </template>
+    <template v-slot:item.discord_img="{ item }">
+      <v-img
+        :src="item.discord_img"
+        class="rounded-circle"
+        height="36"
+        width="36"
+      />
+    </template>
     <template v-slot:item.discord="{ item }">
       <div class="d-flex flex-row pa-1 align-center">
-        <v-img
-          :src="item.discord_img"
-          class="rounded-circle flex-grow-0 mr-2"
-          height="36"
-          width="36"
-        />
         <div class="discord-label">{{ item.discord }}</div>
-        <div class="discord-label">{{ item.discord_nick }}</div>
       </div>
     </template>
   </v-data-table>
