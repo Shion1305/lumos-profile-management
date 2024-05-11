@@ -33,8 +33,12 @@ if (members.length === 0) useRouter().push('/profile')
   <h2>Members List</h2>
   <v-data-table
     :headers="[
-      { title: '名前', value: 'name', sortable: true },
-      { title: '学籍番号', value: 'student_id', sortable: true },
+      { title: '名前', value: 'name', sortable: true, minWidth: '8em' },
+      {
+        title: '学籍番号',
+        value: 'student_id',
+        sortable: true
+      },
       {
         title: 'LINE',
         value: 'line',
@@ -102,5 +106,22 @@ if (members.length === 0) useRouter().push('/profile')
   line-clamp: 2;
   -webkit-line-clamp: 2;
   text-overflow: ellipsis;
+}
+</style>
+<style lang="scss">
+.v-table > .v-table__wrapper > table > tbody > tr > td,
+.v-table > .v-table__wrapper > table > tbody > tr > th,
+.v-table > .v-table__wrapper > table > thead > tr > td,
+.v-table > .v-table__wrapper > table > thead > tr > th,
+.v-table > .v-table__wrapper > table > tfoot > tr > td,
+.v-table > .v-table__wrapper > table > tfoot > tr > th {
+  padding: 0;
+}
+
+.v-table > div.v-table__wrapper > table {
+  > tbody > tr > td:nth-child(1),
+  > thead > tr > th:nth-child(1) {
+    padding-left: 16px;
+  }
 }
 </style>
