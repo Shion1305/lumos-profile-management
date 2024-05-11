@@ -1,22 +1,27 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div id="root-frame">
-    <div>
-      <header>
-        <img src="@/assets/imgs/lumos_logo.png" id="logo" />
-      </header>
-      <div id="slot">
-        <slot />
+  <v-app>
+    <div id="root-frame">
+      <div>
+        <header>
+          <img id="logo" src="@/assets/imgs/lumos_logo.png" />
+        </header>
+        <div id="slot">
+          <slot />
+        </div>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 #root-frame {
-  height: 100lvh;
   display: flex;
+  background: #2e2f3f;
+  color: #fff3db;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  min-height: 100vh;
 
   > div {
     overflow: hidden;
@@ -78,13 +83,5 @@ header {
     box-sizing: border-box;
     padding: 10%;
   }
-}
-</style>
-<style>
-body {
-  margin: 0;
-  background: #2e2f3f;
-  color: #fff3db;
-  font-family: 'Zen Maru Gothic', sans-serif;
 }
 </style>

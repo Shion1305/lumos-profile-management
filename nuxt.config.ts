@@ -1,7 +1,18 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/google-fonts'],
+  modules: [
+    '@nuxtjs/google-fonts',
+    (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }))
+      })
+    }
+  ],
   ssr: false,
+  build: {
+    transpile: ['vuetify']
+  },
   runtimeConfig: {
     public: {
       line: {
@@ -47,6 +58,13 @@ export default defineNuxtConfig({
     families: {
       'Zen Kaku Gothic New': {
         wght: [400, 500, 600, 700]
+      }
+    }
+  },
+  vite: {
+    vue: {
+      template: {
+        transformAssetUrls
       }
     }
   }

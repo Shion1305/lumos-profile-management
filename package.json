@@ -12,9 +12,13 @@
   "devDependencies": {
     "@nuxtjs/google-fonts": "^3.2.0",
     "@types/cookie": "^0.6.0",
-    "@types/node": "^20.11.30"
+    "@types/node": "^20.11.30",
+    "vite": "^5.2.11",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vuetify": "^3.6.5"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "axios": "^1.6.8",
     "cookie": "^0.6.0",
     "firebase-admin": "^12.0.0",
