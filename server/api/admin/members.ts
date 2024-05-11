@@ -62,6 +62,7 @@ export default defineEventHandler(async (event) => {
     exportData.student_id = userdataFromDB.student_id
     exportData.first_name = userdataFromDB.first_name
     exportData.last_name = userdataFromDB.last_name
+    exportData.has_access = userdataFromDB.has_access
     users.push(exportData)
   })
   return users
