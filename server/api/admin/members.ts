@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
   }
   const usersSnapshot = await db.collection('users').orderBy('student_id').get()
   const users: UserProfile[] = []
-  await usersSnapshot.forEach((doc) => {
+  usersSnapshot.forEach((doc) => {
     const exportData = {} as UserProfile
     const userdataFromDB = doc.data() as User
     const discordMemberData = guildMembersData.find((member) => {
@@ -42,13 +42,27 @@ export default defineEventHandler(async (event) => {
       exportData.discord_member_role = discordMemberData.roles.some((role) => {
         return role == memberRoleID
       })!
-      exportData.discord_picture_url =
-        'https://cdn.discordapp.com/avatars/' +
-        discordMemberData.user?.id +
-        '/' +
-        (String(discordMemberData.avatar) !== 'null'
-          ? discordMemberData.avatar
-          : discordMemberData.user?.avatar)
+      if (discordMemberData.user?.avatar || discordMemberData.avatar) {
+        // if user has avatar...
+        exportData.discord_picture_url =
+          'https://cdn.discordapp.com/avatars/' +
+          discordMemberData.user?.id +
+          '/' +
+          (discordMemberData.avatar ?? discordMemberData.user?.avatar)
+      } else {
+        // if user has no avatar...
+        if (discordMemberData.user?.id) {
+          const user_id = BigInt(discordMemberData.user?.id)
+          exportData.discord_picture_url =
+            'https://cdn.discordapp.com/embed/avatars/' +
+            ((user_id >> 22n) % 6n) +
+            '.png'
+        } else {
+          console.log(
+            'no user id found for ' + userdataFromDB.discord_service_id
+          )
+        }
+      }
       exportData.discord_on_server = true
     } else {
       exportData.discord_username = userdataFromDB.discord_username

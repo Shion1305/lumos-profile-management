@@ -13,6 +13,13 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify']
   },
+  nitro: {
+    esbuild: {
+      options: {
+        target: 'es2020'
+      }
+    }
+  },
   runtimeConfig: {
     public: {
       line: {
