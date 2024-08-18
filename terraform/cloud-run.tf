@@ -57,6 +57,123 @@ resource "google_cloud_run_v2_service" "release" {
           port = 8080
         }
       }
+      env {
+        name = "DISCORD_AUTH_URL"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.discord_auth_url.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "DISCORD_BOT_TOKEN"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.discord_bot_token.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "DISCORD_CALLBACK_URI"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.discord_callback_uri.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "DISCORD_CLIENT_ID"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.discord_client_id.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "DISCORD_CLIENT_SECRET"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.discord_client_secret.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "DISCORD_GUILD_ID"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.discord_guild_id.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "DISCORD_MEMBER_ROLE_ID"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.discord_member_role_id.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "FIREBASE_ADMIN_CERT_PATH"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.firebase_admin_cert_path.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "JWT_SECRET"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.jwt_secret.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "LINE_AUTH_URL"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.line_auth_url.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "LINE_CALLBACK_URI"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.line_callback_uri.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "LINE_CLIENT_ID"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.line_client_id.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "LINE_CLIENT_SECRET"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.line_client_secret.secret_id
+            version = "latest"
+          }
+        }
+      }
     }
     scaling {
       max_instance_count = 100
