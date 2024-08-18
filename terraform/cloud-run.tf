@@ -1,8 +1,3 @@
-import {
-  id = "asia-northeast1/release"
-  to = google_cloud_run_v2_service.release
-}
-
 resource "google_cloud_run_v2_service" "release" {
   annotations      = {}
   client           = "cloud-console"
