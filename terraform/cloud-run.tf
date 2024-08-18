@@ -19,14 +19,9 @@ resource "google_cloud_run_v2_service" "release" {
     annotations           = {}
     encryption_key        = null
     execution_environment = null
-    labels = {
-      commit-sha = "51388093213b127735a6253af62a08fcfb1276f8"
-      github_sha = "edb2df9aa77a4294d8c4475cc2e733fc38edc011"
-      managed-by = "github-actions"
-    }
     max_instance_request_concurrency = 80
     revision                         = null
-    service_account                  = "938038185918-compute@developer.gserviceaccount.com"
+    service_account                  = "cloudrun-svc@lumos-profile-management.iam.gserviceaccount.com"
     session_affinity                 = false
     timeout                          = "300s"
     containers {
