@@ -20,6 +20,8 @@ export default defineNuxtConfig({
       }
     }
   },
+  // runtimeConfig will be overridden by environment variables, such as NUXT_PUBLIC_LINE_AUTH_URL
+  // refer https://nuxt.com/docs/guide/going-further/runtime-config#environment-variables
   runtimeConfig: {
     public: {
       line: {
