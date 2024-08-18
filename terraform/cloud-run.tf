@@ -1,8 +1,3 @@
-import {
-  id = "asia-northeast1/release"
-  to = google_cloud_run_v2_service.release
-}
-
 resource "google_cloud_run_v2_service" "release" {
   annotations      = {}
   client           = "cloud-console"
@@ -20,13 +15,11 @@ resource "google_cloud_run_v2_service" "release" {
     encryption_key        = null
     execution_environment = null
     labels = {
-      commit-sha = "51388093213b127735a6253af62a08fcfb1276f8"
-      github_sha = "edb2df9aa77a4294d8c4475cc2e733fc38edc011"
-      managed-by = "github-actions"
+      github_sha = "this_label_is_used_for_deployment"
     }
     max_instance_request_concurrency = 80
     revision                         = null
-    service_account                  = "938038185918-compute@developer.gserviceaccount.com"
+    service_account                  = "cloudrun-svc@lumos-profile-management.iam.gserviceaccount.com"
     session_affinity                 = false
     timeout                          = "300s"
     containers {
@@ -185,5 +178,10 @@ resource "google_cloud_run_v2_service" "release" {
     revision = null
     tag      = null
     type     = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
+  }
+  lifecycle {
+    ignore_changes = [
+      template[0].labels,
+    ]
   }
 }
