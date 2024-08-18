@@ -114,15 +114,6 @@ resource "google_cloud_run_v2_service" "release" {
         }
       }
       env {
-        name = "FIREBASE_ADMIN_CERT_PATH"
-        value_source {
-          secret_key_ref {
-            secret  = data.google_secret_manager_secret.firebase_admin_cert_path.secret_id
-            version = "latest"
-          }
-        }
-      }
-      env {
         name = "JWT_SECRET"
         value_source {
           secret_key_ref {
