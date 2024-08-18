@@ -30,10 +30,6 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
-      - name: create .env file
-        run: |
-          echo "${{ secrets.ENV_VARS }}" > .env
-
       - name: Install dependencies and build
         run: |
           pnpm install
@@ -78,7 +74,6 @@ jobs:
           region: asia-northeast1
           service: stg-pr-${{ github.event.number }}
           image: asia-northeast1-docker.pkg.dev/lumos-profile-management/main/nuxt3-stg-pr-${{ github.event.number }}:latest
-          env_vars_file: .env
 
       - name: Make CloudRun accessible
         run: |
