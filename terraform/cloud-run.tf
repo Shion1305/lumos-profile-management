@@ -16,9 +16,9 @@ resource "google_cloud_run_v2_service" "release" {
   name             = "release"
   project          = "lumos-profile-management"
   template {
-    annotations           = {}
-    encryption_key        = null
-    execution_environment = null
+    annotations                      = {}
+    encryption_key                   = null
+    execution_environment            = null
     max_instance_request_concurrency = 80
     revision                         = null
     service_account                  = "cloudrun-svc@lumos-profile-management.iam.gserviceaccount.com"
